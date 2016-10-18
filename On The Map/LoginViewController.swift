@@ -61,7 +61,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         loginToUdacity(username: usernameTextField.text!, password: passwordTextField.text!) { (success, error, sessionID) in
             switch success {
                 case true : print(sessionID)
-                case false: print("false Returned")
+                case false: print("False Returned: error : \(error)")
             }
         }
     }
@@ -97,19 +97,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
         }
         task.resume()
-    }
-    
-    private func convertDataWithCompletionHandler(data: Data, completionHandlerForConvertData: (_ result: AnyObject?, _ error: NSError?) -> Void) {
-        
-        var parsedResult: Any!
-        do {
-            parsedResult = try JSONSerialization.jsonObject(with: data as Data, options: .allowFragments)
-        } catch {
-            let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
-            completionHandlerForConvertData(nil, NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
-        }
-        
-        completionHandlerForConvertData(parsedResult as AnyObject?, nil)
     }
     
     

@@ -60,7 +60,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         print("Login pressed")
         loginToUdacity(username: usernameTextField.text!, password: passwordTextField.text!) { (success, error, sessionID) in
             switch success {
-                case true : print(sessionID)
+            case true : performUIUpdatesOnMain {
+                self.performSegue(withIdentifier: "performLoginSegue", sender: nil)
+                }
                 case false: print("False Returned: error : \(error)")
             }
         }

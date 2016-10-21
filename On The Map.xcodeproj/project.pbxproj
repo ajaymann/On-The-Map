@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C142239E1DBA479800D946E8 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C142239D1DBA479800D946E8 /* MapViewController.swift */; };
 		C17B382B1DB3832F009D4ED6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17B382A1DB3832F009D4ED6 /* AppDelegate.swift */; };
 		C17B382D1DB3832F009D4ED6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17B382C1DB3832F009D4ED6 /* LoginViewController.swift */; };
 		C17B38301DB3832F009D4ED6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C17B382E1DB3832F009D4ED6 /* Main.storyboard */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C142239D1DBA479800D946E8 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		C17B38271DB3832F009D4ED6 /* On The Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On The Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C17B382A1DB3832F009D4ED6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C17B382C1DB3832F009D4ED6 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				C17B382C1DB3832F009D4ED6 /* LoginViewController.swift */,
+				C142239D1DBA479800D946E8 /* MapViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -181,6 +184,7 @@
 				TargetAttributes = {
 					C17B38261DB3832F009D4ED6 = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = A26X592M5J;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -224,6 +228,7 @@
 				C17B384F1DB3D8BD009D4ED6 /* UdacityClient.swift in Sources */,
 				C17B384A1DB3A529009D4ED6 /* ParseClient.swift in Sources */,
 				C17B38511DB3E92D009D4ED6 /* UdacityConvenience.swift in Sources */,
+				C142239E1DBA479800D946E8 /* MapViewController.swift in Sources */,
 				C17B384D1DB3D8AC009D4ED6 /* UdacityConstants.swift in Sources */,
 				C17B382D1DB3832F009D4ED6 /* LoginViewController.swift in Sources */,
 				C17B38421DB385E7009D4ED6 /* GCDBlackBox.swift in Sources */,
@@ -352,12 +357,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = A26X592M5J;
 				INFOPLIST_FILE = "On The Map/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "xyz.ajaymann.On-The-Map";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -365,12 +371,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = A26X592M5J;
 				INFOPLIST_FILE = "On The Map/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "xyz.ajaymann.On-The-Map";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -393,6 +400,7 @@
 				C17B383B1DB3832F009D4ED6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

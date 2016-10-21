@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="DVg-VJ-OlF">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="DVg-VJ-OlF">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -38,6 +38,7 @@
                                     <constraint firstAttribute="height" constant="240" id="1XX-ec-ZfX"/>
                                     <constraint firstAttribute="width" constant="240" id="fFh-fh-Enx"/>
                                 </constraints>
+                                <variation key="heightClass=regular-widthClass=regular" image="map-large"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Vac-er-sp2">
                                 <subviews>
@@ -75,11 +76,12 @@
                         <outlet property="loginButton" destination="PIS-Nd-FdW" id="mei-yH-IKl"/>
                         <outlet property="passwordTextField" destination="7ut-4A-uGv" id="Zks-2p-6dQ"/>
                         <outlet property="usernameTextField" destination="VeB-St-epZ" id="Yth-l7-bG7"/>
+                        <segue destination="DVg-VJ-OlF" kind="show" identifier="performLoginSegue" id="dkz-9L-caC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-73" y="35"/>
+            <point key="canvasLocation" x="-95" y="35"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="lcR-X1-O6v">
@@ -99,7 +101,9 @@
                                     <constraint firstAttribute="height" constant="60" id="Oql-at-xg0"/>
                                 </constraints>
                                 <items>
-                                    <navigationItem title="Title" id="H5L-if-BPD"/>
+                                    <navigationItem title="Locations" id="H5L-if-BPD">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="reply" id="UXz-VC-A08"/>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                         </subviews>
@@ -116,10 +120,10 @@
             </objects>
             <point key="canvasLocation" x="1815" y="312"/>
         </scene>
-        <!--View Controller-->
+        <!--Map View Controller-->
         <scene sceneID="nQY-Tc-XfH">
             <objects>
-                <viewController id="wQK-AC-IVQ" sceneMemberID="viewController">
+                <viewController id="wQK-AC-IVQ" customClass="MapViewController" customModule="On_The_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dpv-Ow-KcH"/>
                         <viewControllerLayoutGuide type="bottom" id="rIT-Os-Onb"/>
@@ -134,9 +138,15 @@
                                     <constraint firstAttribute="height" constant="60" id="QmI-IG-sXg"/>
                                 </constraints>
                                 <items>
-                                    <navigationItem title="Title" id="P8W-oL-Eqf"/>
+                                    <navigationItem title="Locations" id="P8W-oL-Eqf">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="reply" id="cZP-dj-4HA"/>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="PLi-Xb-s4X">
+                                <frame key="frameInset" minY="60" maxY="49"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -146,10 +156,13 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="favorites" id="MU4-Mx-8FE"/>
+                    <connections>
+                        <outlet property="studentLocationsMapView" destination="PLi-Xb-s4X" id="OLj-sQ-0DQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ctR-dE-2Sg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1815" y="-343"/>
+            <point key="canvasLocation" x="1813.5999999999999" y="-343.17841079460271"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="tDK-sl-QpH">
@@ -158,7 +171,7 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" id="kyR-Xz-WzU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.9724645019" green="0.94524496790000001" blue="0.87449949979999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="wQK-AC-IVQ" kind="relationship" relationship="viewControllers" id="16N-6s-Y6P"/>
@@ -172,5 +185,6 @@
     </scenes>
     <resources>
         <image name="map" width="500" height="500"/>
+        <image name="map-large" width="550" height="545"/>
     </resources>
 </document>

@@ -15,19 +15,25 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     var studentLocations = [StudentLocation]()
     var annotations = [MKPointAnnotation]()
 
+  
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(true)
+//        showStudentPins()
+//    }
+//    
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(true)
+//        showStudentPins()
+//    }
+    
+    @IBOutlet weak var studentLocationsMapView: MKMapView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         studentLocationsMapView.delegate = self
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
         getStudentLocations()
-        showStudentPins()
     }
-    
-    @IBOutlet weak var studentLocationsMapView: MKMapView!
 
     func getStudentLocations() {
         let request = NSMutableURLRequest(url: NSURL(string: "https://parse.udacity.com/parse/classes/StudentLocation")! as URL)
@@ -52,11 +58,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                         let uniqueKey = dictionary["uniqueKey"] as! String
                         let objectID = dictionary["objectId"] as! String
                         let location : StudentLocation = StudentLocation(objectID: objectID, uniqueKey: uniqueKey, firstName: first, lastName: last, mapString: mapString, mediaURL: mediaURL, latitude: Float(lat), longitude: Float(long))
-                        
-                            self.studentLocations.append(location)
-                        
-                        
+                        self.studentLocations.append(location)
                     }
+                    self.showStudentPins()
                 }
             }
             catch {
@@ -80,14 +84,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             annotation.subtitle = mediaURL
             
             // Finally we place the annotation in an array of annotations.
-            
                 self.annotations.append(annotation)
-        
         }
         performUIUpdatesOnMain {
             self.studentLocationsMapView.addAnnotations(self.annotations)
         }
-        
         
     }
     

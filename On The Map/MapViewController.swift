@@ -10,22 +10,10 @@ import UIKit
 import MapKit
 
 
-class MapViewController: UIViewController, MKMapViewDelegate {
+class MapViewController: UIViewController {
 
     var studentLocations = [StudentLocation]()
     var annotations = [MKPointAnnotation]()
-
-  
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(true)
-//        showStudentPins()
-//    }
-//    
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(true)
-//        showStudentPins()
-//    }
     
     @IBOutlet weak var studentLocationsMapView: MKMapView!
     
@@ -92,33 +80,34 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
     }
     
-    private func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        let reuseId = "pin"
-        
-        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
-        
-        if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView!.canShowCallout = true
-            pinView!.pinColor = .red
-            pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-        }
-        else {
-            pinView!.annotation = annotation
-        }
-        
-        return pinView
-    }
+}
     
-    private func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        if control == view.rightCalloutAccessoryView {
-            let app = UIApplication.shared
-            if let toOpen = view.annotation?.subtitle! {
-                app.openURL(NSURL(string: toOpen)! as URL)
+extension MapViewController: MKMapViewDelegate {
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            
+            let reuserIdentifier = "pin"
+            
+            var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuserIdentifier) as? MKPinAnnotationView
+            
+            if pinView == nil {
+                pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuserIdentifier)
+                pinView!.canShowCallout = true
+                pinView!.pinTintColor = .red
+                pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+            } else {
+                pinView?.annotation = annotation
             }
+            
+            return pinView
         }
-    }
-
-
+        
+        func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+            
+            if let url = URL(string: (view.annotation?.subtitle!)!) {
+                if UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+            }
+            
+        }
 }

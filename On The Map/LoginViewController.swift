@@ -9,6 +9,8 @@
 import UIKit
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
+    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -60,7 +62,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         print("Login pressed")
         loginToUdacity(username: usernameTextField.text!, password: passwordTextField.text!) { (success, error, sessionID) in
             switch success {
-            case true : performUIUpdatesOnMain {
+            case true : print(self.appDelegate.uniqueKey!)
+                performUIUpdatesOnMain {
                 self.performSegue(withIdentifier: "performLoginSegue", sender: nil)
                 }
                 case false: print("False Returned: error : \(error)")
@@ -87,7 +90,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
             do {
                 parsedResults = try JSONSerialization.jsonObject(with: newData!, options: .allowFragments) as! [String: AnyObject]
-                if let session = parsedResults["session"] as? [String: AnyObject], let id = session["id"] as? String {
+                print(parsedResults)
+                if let session = parsedResults["session"] as? [String: AnyObject], let id = session["id"] as? String, let account = parsedResults["account"] as? [String: AnyObject] {
+                    self.appDelegate.uniqueKey = account["key"] as! String
                     completionHandlerForLogin(true, nil, id)
                 }
                 

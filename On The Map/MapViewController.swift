@@ -12,7 +12,7 @@ import MapKit
 
 class MapViewController: UIViewController {
 
-    var studentLocations = [StudentLocation]()
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var annotations = [MKPointAnnotation]()
     
     @IBOutlet weak var studentLocationsMapView: MKMapView!
@@ -35,18 +35,18 @@ class MapViewController: UIViewController {
             var parsedResults: [String : AnyObject]
             do {
                 parsedResults = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! [String: AnyObject]
+                
                 if let newData = parsedResults["results"] as? [[String: AnyObject]] {
+                    var count = 1
                     for dictionary in newData {
-                        let lat = CLLocationDegrees(dictionary["latitude"] as! Double)
-                        let long = CLLocationDegrees(dictionary["longitude"] as! Double)
-                        let first = dictionary["firstName"] as! String
-                        let last = dictionary["lastName"] as! String
-                        let mediaURL = dictionary["mediaURL"] as! String
-                        let mapString = dictionary["mapString"] as! String
-                        let uniqueKey = dictionary["uniqueKey"] as! String
-                        let objectID = dictionary["objectId"] as! String
-                        let location : StudentLocation = StudentLocation(objectID: objectID, uniqueKey: uniqueKey, firstName: first, lastName: last, mapString: mapString, mediaURL: mediaURL, latitude: Float(lat), longitude: Float(long))
-                        self.studentLocations.append(location)
+                        
+                        guard let lat = dictionary["latitude"], let long = dictionary["longitude"], let first = dictionary["firstName"], let last = dictionary["lastName"], let mapString = dictionary["mapString"], let mediaURL = dictionary["mediaURL"]  , let uniqueKey = dictionary["uniqueKey"], let objectID = dictionary["objectId"]  else {
+                            print("Some problem \(count += 1)")
+                            continue
+                        }
+                        
+                        let location : StudentLocation = StudentLocation(objectID: objectID as! String, uniqueKey: uniqueKey as! String, firstName: first as! String, lastName: last as! String, mapString: mapString as! String, mediaURL: mediaURL as! String, latitude: Float(CLLocationDegrees(lat as! Double)), longitude: Float(long as! NSNumber))
+                            self.appDelegate.students.append(location)
                     }
                     self.showStudentPins()
                 }
@@ -59,7 +59,7 @@ class MapViewController: UIViewController {
     }
     
     func showStudentPins() {
-        for student in studentLocations {
+        for student in self.appDelegate.students {
             let lat = student.latitude
             let lon =  student.longitude
             let firstName = student.firstName

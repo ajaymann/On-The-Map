@@ -63,10 +63,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         loginToUdacity(username: usernameTextField.text!, password: passwordTextField.text!) { (success, error, sessionID) in
             switch success {
             case true : print(self.appDelegate.uniqueKey!)
-                performUIUpdatesOnMain {
-                self.performSegue(withIdentifier: "performLoginSegue", sender: nil)
-                }
-                case false: print("False Returned: error : \(error)")
+                        self.getMyData(uniqueKey: self.appDelegate.uniqueKey!)
+                        performUIUpdatesOnMain {
+                        self.performSegue(withIdentifier: "performLoginSegue", sender: nil)
+                        }
+            
+            case false: print("False Returned: error : \(error)")
             }
         }
     }
@@ -86,13 +88,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             let dataLength = data?.count
             let r = 5...Int(dataLength!)
             let newData = data?.subdata(in: Range(r)) /* subset response data! */
+            
             var parsedResults: [String: AnyObject]
             
             do {
                 parsedResults = try JSONSerialization.jsonObject(with: newData!, options: .allowFragments) as! [String: AnyObject]
-                print(parsedResults)
                 if let session = parsedResults["session"] as? [String: AnyObject], let id = session["id"] as? String, let account = parsedResults["account"] as? [String: AnyObject] {
-                    self.appDelegate.uniqueKey = account["key"] as! String
+                    self.appDelegate.uniqueKey = account["key"] as? String
                     completionHandlerForLogin(true, nil, id)
                 }
                 
@@ -106,6 +108,34 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         task.resume()
     }
     
+    func getMyData(uniqueKey: String) {
+        let urlString = "https://parse.udacity.com/parse/classes/StudentLocation?where=%7B%22uniqueKey%22%3A%22\(uniqueKey)%22%7D"
+        let url = NSURL(string: urlString)
+        let request = NSMutableURLRequest(url: url! as URL)
+        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+        let session = URLSession.shared
+        let task = session.dataTask(with: request as URLRequest) { data, response, error in
+            if error != nil { // Handle error
+                return
+            }
+            
+            var parsedResults: [String: AnyObject]
+            
+            do {
+                parsedResults = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! [String: AnyObject]
+                if let result = parsedResults["results"] as? [String: AnyObject], let firstName = result["firstName"] as? String, let lastName = parsedResults["lastName"] as? String {
+                    self.appDelegate.firstName = firstName
+                    self.appDelegate.lastName = lastName
+                }
+                
+            } catch {
+                let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
+            }
+            
+        }
+        task.resume()
+    }
     
 }
 

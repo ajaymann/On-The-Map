@@ -43,7 +43,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var students = [StudentLocation]()
     var uniqueKey: String? = nil
-
-
+    var firstName: String? = nil
+    var lastName: String? = nil
+    var mapString : String? = nil
+    var mediaURL : String? = nil
+    var latitude : Double? = nil
+    var longitude : Double? = nil
 }
 

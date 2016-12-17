@@ -21,7 +21,7 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         studentLocationsMapView.delegate = self
-        //getMyData(uniqueKey: self.appDelegate.uniqueKey!)
+        getMyData(uniqueKey: self.appDelegate.uniqueKey!)
     }
 
     override func viewWillAppear(_ animated: Bool) {

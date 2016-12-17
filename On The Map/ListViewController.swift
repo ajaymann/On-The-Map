@@ -8,20 +8,26 @@
 
 import UIKit
 
+var studentLocationListView = [StudentLocation]()
+
 class ListViewController: UIViewController, UITableViewDelegate {
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
-
     @IBOutlet weak var tableView: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(appDelegate.students.count)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        self.tableView.reloadData()
+        performUIUpdatesOnMain {
+            self.tableView.reloadData()
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        studentLocationListView.removeAll()
     }
 }
 
@@ -29,18 +35,18 @@ extension ListViewController: UITableViewDataSource {
     
     func tableView(_ tableView:UITableView, numberOfRowsInSection section:Int) -> Int
     {
-        return self.appDelegate.students.count
+        return studentLocationListView.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell:UITableViewCell=UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "Cell")
-        cell.textLabel?.text = "\(self.appDelegate.students[indexPath.row].firstName) \(self.appDelegate.students[indexPath.row].lastName)"
+        cell.textLabel?.text = "\(studentLocationListView[indexPath.row].firstName) \(studentLocationListView[indexPath.row].lastName)"
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let url = URL(string: (self.appDelegate.students[indexPath.row].mediaURL)) {
+    @objc(tableView:didSelectRowAtIndexPath:) func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let url = URL(string: (studentLocationListView[indexPath.row].mediaURL)) {
             if UIApplication.shared.canOpenURL(url) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             } else {
@@ -51,3 +57,5 @@ extension ListViewController: UITableViewDataSource {
 
     }
 }
+
+

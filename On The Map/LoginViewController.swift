@@ -12,64 +12,47 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
+    var userKey = ""
+    var firstName = ""
+    var lastName = ""
+    
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    let indicator:UIActivityIndicatorView = UIActivityIndicatorView  (activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
 
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
+    override func viewDidLoad() {
+        super.viewDidLoad()
         usernameTextField.delegate = self
         passwordTextField.delegate = self
-        configureUI()
     }
+    
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        configureUI()
+        subscribeToKeyboardNotifications()
     }
     
-    func configureUI() {
-        if usernameTextField.text == "" || passwordTextField.text == "" {
-            loginButton.isEnabled = false
-            loginButton.alpha = 0.5
-        } else {
-            loginButton.isEnabled = true
-            loginButton.alpha = 1
-        }
+    func textFieldDidEndEditing(_ textField: UITextField){
+        unSubscribeToKeyboardNotifications()
     }
-    
-    private func ParseURLFromParameters(parameters : [String: AnyObject]) -> URL {
-        let components = NSURLComponents()
-        components.scheme = Constants.ApiScheme
-        components.host = Constants.ApiHost
-        components.path = Constants.ApiPath
-        components.queryItems = [URLQueryItem]()
-        
-        for (key, value) in parameters {
-            let queryItem = URLQueryItem(name: key, value: "\(value)")
-            components.queryItems!.append(queryItem)
-        }
-        
-        return components.url!
-    }
-    
     
     @IBAction func loginButtonPressed(_ sender: AnyObject) {
-        print("Login pressed")
+        showActivityIndicator()
         loginToUdacity(username: usernameTextField.text!, password: passwordTextField.text!) { (success, error, sessionID) in
             switch success {
-            case true : print(self.appDelegate.uniqueKey!)
-                        self.getMyData(uniqueKey: self.appDelegate.uniqueKey!)
-                        performUIUpdatesOnMain {
-                        self.performSegue(withIdentifier: "performLoginSegue", sender: nil)
+            case true : performUIUpdatesOnMain {
+                            self.performSegue(withIdentifier: "performLoginSegue", sender: nil)
+                            self.hideActivityIndicator()
                         }
             
-            case false: print("False Returned: error : \(error)")
+            case false: print("False Returned: error : \(error))")
+                        performUIUpdatesOnMain {
+                            self.hideActivityIndicator()
+                        }
             }
+
         }
     }
     
@@ -81,8 +64,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         request.httpBody = "{\"udacity\": {\"username\": \"\(username)\", \"password\": \"\(password)\"}}".data(using: String.Encoding.utf8)
         let session = URLSession.shared
         let task = session.dataTask(with: request as URLRequest) { data, response, error in
-            if let error = error { // Handle error…
+            if let error = error {
                 completionHandlerForLogin(false, error, nil)
+            }
+            
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode > 399 && httpResponse.statusCode < 600 {
+                    print("error \(httpResponse.statusCode)")
+                    completionHandlerForLogin(false, NSError(domain: "returned code \(httpResponse.statusCode)", code: 1, userInfo: nil), nil)
+                }
             }
             
             let dataLength = data?.count
@@ -108,34 +98,45 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         task.resume()
     }
     
-    func getMyData(uniqueKey: String) {
-        let urlString = "https://parse.udacity.com/parse/classes/StudentLocation?where=%7B%22uniqueKey%22%3A%22\(uniqueKey)%22%7D"
-        let url = NSURL(string: urlString)
-        let request = NSMutableURLRequest(url: url! as URL)
-        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
-        let session = URLSession.shared
-        let task = session.dataTask(with: request as URLRequest) { data, response, error in
-            if error != nil { // Handle error
-                return
-            }
-            
-            var parsedResults: [String: AnyObject]
-            
-            do {
-                parsedResults = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! [String: AnyObject]
-                if let result = parsedResults["results"] as? [String: AnyObject], let firstName = result["firstName"] as? String, let lastName = parsedResults["lastName"] as? String {
-                    self.appDelegate.firstName = firstName
-                    self.appDelegate.lastName = lastName
-                }
-                
-            } catch {
-                let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
-            }
-            
-        }
-        task.resume()
+    func subscribeToKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
+    func unSubscribeToKeyboardNotifications() {
+        
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    
+    func keyboardWillShow(notification: NSNotification) {
+        if view.frame.origin.y == 0{
+                self.view.frame.origin.y -= 3.2 * passwordTextField.frame.height
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
+    }
+    
+    func showActivityIndicator() {
+        indicator.color = UIColor.white
+        indicator.backgroundColor = UIColor.darkGray
+        indicator.alpha = 0.5
+        indicator.frame = CGRect.init(x: 0.0, y: 0.0, width: 40.0, height: 40.0)
+        indicator.layer.cornerRadius = 5
+        indicator.center = self.view.center
+        self.view.addSubview(indicator)
+        indicator.bringSubview(toFront: self.view)
+        indicator.startAnimating()
+    }
+    
+    func hideActivityIndicator(){
+        indicator.stopAnimating()
+        self.indicator.hidesWhenStopped = true
+    }
 }
 

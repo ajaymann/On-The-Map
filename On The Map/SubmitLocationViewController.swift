@@ -88,7 +88,9 @@ extension SubmitLocationViewController: MKMapViewDelegate {
             
             if localSearchResponse == nil{
                 let alertController = UIAlertController(title: nil, message: "Place Not Found", preferredStyle: UIAlertControllerStyle.alert)
-                alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
+                alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: {action in
+                    self.dismiss(animated: true, completion: nil)
+                }))
                 self.present(alertController, animated: true, completion: nil)
                 return
             }

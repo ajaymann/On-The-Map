@@ -21,6 +21,7 @@
 		C65644441E014A6C0086B1A3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65644431E014A6C0086B1A3 /* Constants.swift */; };
 		C6A56D871E07238300A96447 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A56D861E07238300A96447 /* Reachability.swift */; };
 		C6A56D891E07257E00A96447 /* Students.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A56D881E07257E00A96447 /* Students.swift */; };
+		C6A56D8B1E072AA900A96447 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A56D8A1E072AA900A96447 /* Loader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		C65644431E014A6C0086B1A3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C6A56D861E07238300A96447 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		C6A56D881E07257E00A96447 /* Students.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Students.swift; sourceTree = "<group>"; };
+		C6A56D8A1E072AA900A96447 /* Loader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 			children = (
 				C17B38361DB3832F009D4ED6 /* Info.plist */,
 				C6A56D861E07238300A96447 /* Reachability.swift */,
+				C6A56D8A1E072AA900A96447 /* Loader.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -198,6 +201,7 @@
 			files = (
 				C1A48C551DCB6D390003933E /* SearchLocationViewController.swift in Sources */,
 				C142239E1DBA479800D946E8 /* MapViewController.swift in Sources */,
+				C6A56D8B1E072AA900A96447 /* Loader.swift in Sources */,
 				C19F03B41DCB3572003F9AEF /* ListViewController.swift in Sources */,
 				C17B382D1DB3832F009D4ED6 /* LoginViewController.swift in Sources */,
 				C17B38421DB385E7009D4ED6 /* GCDBlackBox.swift in Sources */,

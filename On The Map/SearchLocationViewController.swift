@@ -30,9 +30,6 @@ class SearchLocationViewController: UIViewController {
     @IBAction func cancelPressed(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationViewController = segue.destination as! SubmitLocationViewController
         destinationViewController.locationText = searchLoctation

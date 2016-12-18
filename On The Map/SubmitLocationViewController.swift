@@ -114,6 +114,3 @@ extension SubmitLocationViewController: MKMapViewDelegate {
         }
     }
 }
-
-
-

@@ -39,22 +39,34 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func loginButtonPressed(_ sender: AnyObject) {
-        showActivityIndicator()
-        loginToUdacity(username: usernameTextField.text!, password: passwordTextField.text!) { (success, error, sessionID) in
-            switch success {
-            case true : performUIUpdatesOnMain {
-                            self.performSegue(withIdentifier: "performLoginSegue", sender: nil)
-                            self.hideActivityIndicator()
-                        }
-            
-            case false: print("False Returned: error : \(error))")
-                        performUIUpdatesOnMain {
-                            self.hideActivityIndicator()
-                        }
+        if Reachability.isConnectedToNetwork() == true
+        {
+            showActivityIndicator()
+            loginToUdacity(username: usernameTextField.text!, password: passwordTextField.text!) { (success, error, sessionID) in
+                switch success {
+                case true : performUIUpdatesOnMain {
+                    self.performSegue(withIdentifier: "performLoginSegue", sender: nil)
+                    self.hideActivityIndicator()
+                    }
+                    
+                case false: performUIUpdatesOnMain {
+                    self.hideActivityIndicator()
+                    let alert = UIAlertController(title: "Error", message: "Username and Password not correct", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                    }
+                }
+                
             }
 
         }
-    }
+        else
+        {
+            let alert = UIAlertController(title: "No Internet", message: "No Internet Connection", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+            }
     
     func loginToUdacity(username: String, password: String, completionHandlerForLogin : @escaping (_ success: Bool, _ error: Error? , _ sessionID : String?) -> Void) {
         let request = NSMutableURLRequest(url: NSURL(string: "https://www.udacity.com/api/session")! as URL)

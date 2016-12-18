@@ -14,14 +14,13 @@ class MapViewController: UIViewController {
 
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var annotations = [MKPointAnnotation]()
-    var studentLocations = [StudentLocation]()
     
     @IBOutlet weak var studentLocationsMapView: MKMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         studentLocationsMapView.delegate = self
-        getMyData(uniqueKey: self.appDelegate.uniqueKey!)
+        //getMyData(uniqueKey: self.appDelegate.uniqueKey!)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -37,28 +36,32 @@ class MapViewController: UIViewController {
         let session = URLSession.shared
         let task = session.dataTask(with: request as URLRequest) { data, response, error in
             if error != nil { // Handle error...
-                return
+                let alert = UIAlertController(title: "Error", message: "Download Failed", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
+            
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode > 399 && httpResponse.statusCode < 600 {
+                    print("error \(httpResponse.statusCode)")
+                    let alert = UIAlertController(title: "Error", message: "Download Failed", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+            
             var parsedResults: [String : AnyObject]
             do {
                 parsedResults = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! [String: AnyObject]
-                
-                if let newData = parsedResults["results"] as? [[String: AnyObject]] {
-                    var count = 0
-                    for dictionary in newData {
-                        
-                        guard let lat = dictionary["latitude"], let long = dictionary["longitude"], let first = dictionary["firstName"], let last = dictionary["lastName"], let mapString = dictionary["mapString"], let mediaURL = dictionary["mediaURL"]  , let uniqueKey = dictionary["uniqueKey"], let objectID = dictionary["objectId"]  else {
-                                count += 1
-                                print("Some problem \(count) ")
-                                continue
-                        }
-                        
-                        let location : StudentLocation = StudentLocation(objectID: objectID as! String, uniqueKey: uniqueKey as! String, firstName: first as! String, lastName: last as! String, mapString: mapString as! String, mediaURL: mediaURL as! String, latitude: Float(CLLocationDegrees(lat as! Double)), longitude: Float(long as! NSNumber))
-                            self.studentLocations.append(location)
-                            studentLocationListView.append(location)
-                    }
-                    self.showStudentPins()
+                guard let newData = parsedResults["results"] as? [[String: AnyObject]] else {
+                    return
                 }
+                for dictionary in newData {
+                    if let location : StudentLocation = StudentLocation(dict: dictionary){
+                        studentLocations.append(location)
+                    }
+                }
+                self.showStudentPins()
             }
             catch {
                 _ = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
@@ -76,7 +79,7 @@ class MapViewController: UIViewController {
     func showStudentPins() {
         if !studentLocations.isEmpty {
             
-            for student in self.studentLocations {
+            for student in studentLocations {
                 let lat = student.latitude
                 let lon =  student.longitude
                 let firstName = student.firstName

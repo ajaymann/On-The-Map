@@ -8,7 +8,7 @@
 
 import Foundation
 
-class StudentLocation {
+struct StudentLocation {
     var objectID : String
     var uniqueKey : String
     var firstName : String
@@ -18,15 +18,22 @@ class StudentLocation {
     var latitude : Float
     var longitude : Float
     
-    init(objectID : String, uniqueKey: String, firstName: String, lastName: String, mapString: String, mediaURL : String, latitude: Float, longitude: Float) {
-        self.objectID = objectID
-        self.uniqueKey = uniqueKey
-        self.firstName = firstName
-        self.lastName = lastName
-        self.mapString = mapString
-        self.mediaURL = mediaURL
-        self.latitude = latitude
-        self.longitude = longitude
+    init?(dict: [String: AnyObject]){
+        
+        guard let objectID = dict["objectId"], let uniqueKey = dict["uniqueKey"], let firstName = dict["firstName"], let lastName =  dict["lastName"], let mapString = dict["mapString"], let mediaURL = dict["mediaURL"], let latitude = dict["latitude"], let longitude = dict["longitude"] else {
+            return nil
+        }
+        
+        self.objectID = objectID as! String
+        self.uniqueKey = uniqueKey as! String
+        self.firstName = firstName as! String
+        self.lastName = lastName as! String
+        self.mapString = mapString as! String
+        self.mediaURL = mediaURL as! String
+        self.latitude = latitude as! Float
+        self.longitude = longitude as! Float
+        
     }
+    
 }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="xsi-A2-rpU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="DVg-VJ-OlF">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -116,16 +116,15 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Mjg-ZM-pX1">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Mjg-ZM-pX1">
                                 <rect key="frame" x="0.0" y="60" width="375" height="558"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="6K1-jH-zTz">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6K1-jH-zTz" id="YBn-BK-eej">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -140,7 +139,11 @@
                         <constraints>
                             <constraint firstItem="VqG-nf-8Q1" firstAttribute="top" secondItem="cdY-N8-dLw" secondAttribute="top" id="KOz-I0-8Xv"/>
                             <constraint firstAttribute="trailing" secondItem="VqG-nf-8Q1" secondAttribute="trailing" id="fZr-Vh-G5a"/>
+                            <constraint firstItem="Mjg-ZM-pX1" firstAttribute="top" secondItem="VqG-nf-8Q1" secondAttribute="bottom" id="kKB-di-XHf"/>
+                            <constraint firstItem="Mjg-ZM-pX1" firstAttribute="leading" secondItem="cdY-N8-dLw" secondAttribute="leading" id="sdD-l4-bpw"/>
+                            <constraint firstItem="Sl2-9x-tDx" firstAttribute="top" secondItem="Mjg-ZM-pX1" secondAttribute="bottom" id="xR3-Pm-yPc"/>
                             <constraint firstItem="VqG-nf-8Q1" firstAttribute="leading" secondItem="cdY-N8-dLw" secondAttribute="leading" id="yrj-mK-adf"/>
+                            <constraint firstAttribute="trailing" secondItem="Mjg-ZM-pX1" secondAttribute="trailing" id="ysU-Ox-NIa"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="List" image="list" selectedImage="list" id="Ind-et-7In"/>
@@ -228,8 +231,8 @@
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="30"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aZQ-Fr-QlD">
-                                <rect key="frame" x="106" y="497" width="163" height="34"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aZQ-Fr-QlD">
+                                <rect key="frame" x="118" y="497" width="139" height="33"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                                 <state key="normal" title="Find On The Map">
@@ -304,8 +307,8 @@
                                     <outlet property="delegate" destination="CDs-uy-b9w" id="N6r-lm-FPa"/>
                                 </connections>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hJj-Mv-wP1">
-                                <rect key="frame" x="147" y="555" width="80" height="31"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hJj-Mv-wP1">
+                                <rect key="frame" x="158" y="553" width="58" height="33"/>
                                 <color key="backgroundColor" red="1" green="0.7896117233626363" blue="0.60674878023042655" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                                 <state key="normal" title="Submit">
@@ -379,6 +382,6 @@
         <image name="placeholder" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Z1u-t1-YhL"/>
+        <segue reference="TH8-8e-Ybs"/>
     </inferredMetricsTieBreakers>
 </document>

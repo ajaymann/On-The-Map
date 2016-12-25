@@ -18,7 +18,6 @@ class SearchLocationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.searchButton.layer.cornerRadius = 5.0
-        // Do any additional setup after loading the view.
     }
 
     @IBAction func searchButtonPressed(_ sender: Any) {
@@ -35,6 +34,4 @@ class SearchLocationViewController: UIViewController {
         destinationViewController.locationText = searchLoctation
         destinationViewController.show(self, sender: nil)
     }
- 
-
 }

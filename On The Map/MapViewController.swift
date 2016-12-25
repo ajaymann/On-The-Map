@@ -20,7 +20,7 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         studentLocationsMapView.delegate = self
-        //getMyData(uniqueKey: self.appDelegate.uniqueKey!)
+        getMyData(uniqueKey: userKey)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -102,40 +102,13 @@ class MapViewController: UIViewController {
     }
     
     func getMyData(uniqueKey: String) {
-        let urlString = "https://www.udacity.com/api/users/\(uniqueKey)"
-        
-        let url = URL(string: urlString)
-        let urlComponent = url?.absoluteString
-        
-        var request = NSMutableURLRequest(url: URL(string:urlComponent!)!)
-        
-        let session = URLSession.shared
-        
-        let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
-            if error != nil { // Handle error
-                return
-            }
-            
-            let dataLength = data?.count
-            let r = 5...Int(dataLength!)
-            let newData = data?.subdata(in: Range(r)) /* subset response data! */
-            
-            var parsedResults: [String: AnyObject]
-            
-            do {
-                parsedResults = try JSONSerialization.jsonObject(with: newData!, options: .allowFragments) as! [String: AnyObject]
-                if let user = parsedResults["user"] as? [String: AnyObject], let firstName = user["first_name"] as? String, let lastName = user["last_name"] as? String {
-                    self.appDelegate.firstName = firstName
-                    self.appDelegate.lastName = lastName
+        UdacityClient.sharedInstance().taskForPost(url: "https://www.udacity.com/api/users/\(uniqueKey)", jsonBody: nil, method : "GET") { (success, result, error) in
+           
+                if let user = result?["user"] as? [String: AnyObject], let firstName = user["first_name"] as? String, let lastName = user["last_name"] as? String {
+                    userFirstName = firstName
+                    userLastName = lastName
                 }
-                
-            } catch {
-                    let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
-              }
         }
-        
-        task.resume()
-        
     }
     
     @IBAction func myUnwindAction(segue: UIStoryboardSegue) {}
@@ -172,11 +145,4 @@ extension MapViewController: MKMapViewDelegate {
             
         }
     
-    class func sharedInstance() -> MapViewController {
-        
-        struct Singleton {
-            static var sharedInstance = MapViewController()
-        }
-        return Singleton.sharedInstance
-    }
 }

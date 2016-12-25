@@ -41,13 +41,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    var students = [StudentLocation]()
-    var uniqueKey: String? = nil
-    var firstName: String? = nil
-    var lastName: String? = nil
-    var mapString : String? = nil
-    var mediaURL : String? = nil
-    var latitude : Double? = nil
-    var longitude : Double? = nil
 }
 

@@ -9,3 +9,11 @@
 import Foundation
 
 var studentLocations = [StudentLocation]()
+
+
+var userKey : String = ""
+var userFirstName : String = ""
+var userLastName : String = ""
+var mediaURL : String = ""
+var latitude : Double = 0.0
+var longitude : Double = 0.0

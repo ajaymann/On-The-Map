@@ -36,9 +36,8 @@ class SubmitLocationViewController: UIViewController {
     }
     
     @IBAction func submitPressed(_ sender: Any) {
-        
+        showActivityIndicator()
         if Reachability.isConnectedToNetwork() {
-            
             mediaURL = mediaURLLink.text!
             let request = NSMutableURLRequest(url: NSURL(string: "https://parse.udacity.com/parse/classes/StudentLocation")! as URL)
             request.httpMethod = "POST"
@@ -62,6 +61,7 @@ class SubmitLocationViewController: UIViewController {
                                 
                             }))
                             self.present(alert, animated: true, completion: nil)
+                            self.hideActivityIndicator()
                         }
                     }
                 }
@@ -69,6 +69,7 @@ class SubmitLocationViewController: UIViewController {
             task.resume()
         }
         else {
+                hideActivityIndicator()
                 let alert = UIAlertController(title: "No Internet", message: "No Internet Connection", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)

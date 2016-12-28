@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import MapKit
 
 var studentLocations = [StudentLocation]()
-
+var annotations = [MKPointAnnotation]()
 
 var userKey : String = ""
 var userFirstName : String = ""

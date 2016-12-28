@@ -16,7 +16,6 @@ class UdacityClient : NSObject {
                 request.addValue("application/json", forHTTPHeaderField: "Accept")
                 request.addValue("application/json", forHTTPHeaderField: "Content-Type")
                 request.httpBody = jsonBody?.data(using: String.Encoding.utf8)
-                print(request.url)
                 let session = URLSession.shared
                 let task = session.dataTask(with: request as URLRequest) { data, response, error in
                     

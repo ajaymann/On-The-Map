@@ -22,6 +22,7 @@
 		C65644441E014A6C0086B1A3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65644431E014A6C0086B1A3 /* Constants.swift */; };
 		C6A56D871E07238300A96447 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A56D861E07238300A96447 /* Reachability.swift */; };
 		C6A56D891E07257E00A96447 /* Students.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A56D881E07257E00A96447 /* Students.swift */; };
+		C6DFCB651E112474006F5DE7 /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DFCB641E112474006F5DE7 /* ParseClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		C65644431E014A6C0086B1A3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C6A56D861E07238300A96447 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		C6A56D881E07257E00A96447 /* Students.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Students.swift; sourceTree = "<group>"; };
+		C6DFCB641E112474006F5DE7 /* ParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 				C17B383E1DB38550009D4ED6 /* Controller */,
 				C17B383C1DB38545009D4ED6 /* Model */,
 				C60A4A011E0F0F7E00C34850 /* UdacityClient.swift */,
+				C6DFCB641E112474006F5DE7 /* ParseClient.swift */,
 			);
 			path = "On The Map";
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 				C6A56D891E07257E00A96447 /* Students.swift in Sources */,
 				C6A56D871E07238300A96447 /* Reachability.swift in Sources */,
 				C17B38481DB39F38009D4ED6 /* StudentLocation.swift in Sources */,
+				C6DFCB651E112474006F5DE7 /* ParseClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

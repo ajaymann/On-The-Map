@@ -39,43 +39,30 @@ class SubmitLocationViewController: UIViewController {
         showActivityIndicator()
         if Reachability.isConnectedToNetwork() {
             mediaURL = mediaURLLink.text!
-            let request = NSMutableURLRequest(url: NSURL(string: "https://parse.udacity.com/parse/classes/StudentLocation")! as URL)
-            request.httpMethod = "POST"
-            request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
-            request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.httpBody = "{\"uniqueKey\": \"\(userKey)\", \"firstName\": \"\(userFirstName)\", \"lastName\": \"\(userLastName)\",\"mapString\": \"\(locationText!)\", \"mediaURL\": \"\(mediaURL)\",\"latitude\": \(latitude), \"longitude\": \(longitude)}".data(using: String.Encoding.utf8)
-            
-            let session = URLSession.shared
-            let task = session.dataTask(with: request as URLRequest) { data, response, error in
-                if error != nil { // Handle error…
-                    return
-                }
-                
-                if let httpResponse = response as? HTTPURLResponse {
-                    if httpResponse.statusCode > 199 && httpResponse.statusCode < 300 {
-                        performUIUpdatesOnMain {
-                            let alert = UIAlertController(title: "Post Successful", message: "Pin has been posted", preferredStyle: UIAlertControllerStyle.alert)
-                            alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: { action in
-                                self.performSegue(withIdentifier: "unwind", sender: nil)
-                                
-                            }))
-                            self.present(alert, animated: true, completion: nil)
-                            self.hideActivityIndicator()
-                        }
+            let httpBody = "{\"uniqueKey\": \"\(userKey)\", \"firstName\": \"\(userFirstName)\", \"lastName\": \"\(userLastName)\",\"mapString\": \"\(locationText!)\", \"mediaURL\": \"\(mediaURL)\",\"latitude\": \(latitude), \"longitude\": \(longitude)}"
+            ParseClient.sharedInstance().taskForPost(url: "https://parse.udacity.com/parse/classes/StudentLocation", jsonBody: httpBody, method: "POST", completionHandlerForPost: { (success, result, error) in
+                if success == true {
+                    performUIUpdatesOnMain {
+                        let alert = UIAlertController(title: "Post Successful", message: "Pin has been posted", preferredStyle: UIAlertControllerStyle.alert)
+                        alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: { action in
+                            self.performSegue(withIdentifier: "unwind", sender: nil)
+                            
+                        }))
+                        self.present(alert, animated: true, completion: nil)
+                        self.hideActivityIndicator()
                     }
+                } else {
+                    performUIUpdatesOnMain {
+                        self.hideActivityIndicator()
+                        let alert = UIAlertController(title: "No Internet", message: "No Internet Connection", preferredStyle: UIAlertControllerStyle.alert)
+                        alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                    
                 }
-            }
-            task.resume()
-        }
-        else {
-                hideActivityIndicator()
-                let alert = UIAlertController(title: "No Internet", message: "No Internet Connection", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+            })
         }
     }
-    
 }
 
 extension SubmitLocationViewController: MKMapViewDelegate {

@@ -76,7 +76,7 @@ extension SubmitLocationViewController: MKMapViewDelegate {
                 self.hideActivityIndicator()
                 let alertController = UIAlertController(title: nil, message: "Place Not Found", preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: {action in
-                    self.dismiss(animated: true, completion: nil)
+                    self.navigationController?.popViewController(animated: true)
                 }))
                 self.present(alertController, animated: true, completion: nil)
                 return

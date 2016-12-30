@@ -31,11 +31,9 @@ class SubmitLocationViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    
-    @IBAction func cancelPressed(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+    @IBAction func cancelBtnPressed(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
     }
-    
     @IBAction func submitPressed(_ sender: Any) {
         showActivityIndicator()
         if Reachability.isConnectedToNetwork() {
@@ -46,7 +44,6 @@ class SubmitLocationViewController: UIViewController, UITextFieldDelegate {
                     performUIUpdatesOnMain {
                         let alert = UIAlertController(title: "Post Successful", message: "Pin has been posted", preferredStyle: UIAlertControllerStyle.alert)
                         alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: { action in
-                            self.performSegue(withIdentifier: "unwind", sender: nil)
                             
                         }))
                         self.present(alert, animated: true, completion: nil)
@@ -76,6 +73,7 @@ extension SubmitLocationViewController: MKMapViewDelegate {
         localSearch.start { (localSearchResponse, error) -> Void in
             
             if localSearchResponse == nil{
+                self.hideActivityIndicator()
                 let alertController = UIAlertController(title: nil, message: "Place Not Found", preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: {action in
                     self.dismiss(animated: true, completion: nil)
@@ -116,5 +114,9 @@ extension SubmitLocationViewController: MKMapViewDelegate {
     func hideActivityIndicator(){
         indicator.stopAnimating()
         self.indicator.hidesWhenStopped = true
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+        
     }
 }

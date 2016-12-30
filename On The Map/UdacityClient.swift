@@ -46,6 +46,32 @@ class UdacityClient : NSObject {
         task.resume()
     }
     
+    func taskForLogout(url: String, completionHandlerForLogout : @escaping (_ success: Bool, _ result: [String:Any]?, _ err: NSError?) -> Void) {
+        let request = NSMutableURLRequest(url: URL(string: url)!)
+        request.httpMethod = "DELETE"
+        var xsrfCookie: HTTPCookie? = nil
+        let sharedCookieStorage = HTTPCookieStorage.shared
+        for cookie in sharedCookieStorage.cookies! as [HTTPCookie] {
+            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+        }
+        if let xsrfCookie = xsrfCookie {
+            request.addValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-Token")
+        }
+        let session = URLSession.shared
+        let task = session.dataTask(with: request as URLRequest) { data, response, error in
+            if error != nil { // Handle error…
+                //
+                completionHandlerForLogout(false, nil, error as NSError?)
+                return
+            }
+            let dataLength = data?.count
+            let r = 5...Int(dataLength!)
+            let newData = data?.subdata(in: Range(r)) /* subset response data! */
+            completionHandlerForLogout(true, newData as? [String:Any], nil)
+        }
+        task.resume()
+    }
+    
     class func sharedInstance() -> UdacityClient {
         struct Singleton {
             static var sharedInstance = UdacityClient()

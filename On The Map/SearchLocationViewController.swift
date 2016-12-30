@@ -58,12 +58,18 @@ class SearchLocationViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    @IBAction func cancelPressed(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+    @IBAction func cancelBtnPressed(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+
     }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationViewController = segue.destination as! SubmitLocationViewController
         destinationViewController.locationText = searchLoctation
         destinationViewController.show(self, sender: nil)
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+        
     }
 }

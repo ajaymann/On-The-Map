@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1212" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="RPP-Qt-E0K">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -77,6 +77,7 @@
                             <constraint firstItem="Vac-er-sp2" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="p5N-I5-Zbb"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="crg-UR-PV6"/>
                     <connections>
                         <outlet property="loginButton" destination="PIS-Nd-FdW" id="mei-yH-IKl"/>
                         <outlet property="passwordTextField" destination="7ut-4A-uGv" id="Zks-2p-6dQ"/>
@@ -86,7 +87,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-95" y="35"/>
+            <point key="canvasLocation" x="844" y="34.632683658170919"/>
         </scene>
         <!--List-->
         <scene sceneID="lcR-X1-O6v">
@@ -153,7 +154,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BBw-Qo-QQ5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1813.5999999999999" y="311.69415292353824"/>
+            <point key="canvasLocation" x="2752.8000000000002" y="311.69415292353824"/>
         </scene>
         <!--Map-->
         <scene sceneID="nQY-Tc-XfH">
@@ -174,7 +175,11 @@
                                 </constraints>
                                 <items>
                                     <navigationItem title="Locations" id="P8W-oL-Eqf">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="reply" id="cZP-dj-4HA"/>
+                                        <barButtonItem key="leftBarButtonItem" systemItem="reply" id="cZP-dj-4HA">
+                                            <connections>
+                                                <action selector="logoutPressed:" destination="wQK-AC-IVQ" id="CrV-I7-Tll"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" image="placeholder" id="6a3-pV-gUr">
                                             <connections>
                                                 <segue destination="xsi-A2-rpU" kind="show" id="Z1u-t1-YhL"/>
@@ -202,7 +207,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ctR-dE-2Sg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1813.5999999999999" y="-343.17841079460271"/>
+            <point key="canvasLocation" x="2752.8000000000002" y="-343.17841079460271"/>
         </scene>
         <!--Post Location-->
         <scene sceneID="yVX-Bl-CDH">
@@ -252,7 +257,7 @@
                                 </constraints>
                                 <state key="normal" title="Cancel"/>
                                 <connections>
-                                    <action selector="cancelPressed:" destination="xsi-A2-rpU" eventType="touchUpInside" id="Az2-Q1-FZh"/>
+                                    <action selector="cancelBtnPressed:" destination="xsi-A2-rpU" eventType="touchUpInside" id="cgc-uy-TaL"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -281,7 +286,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wEb-sT-Ego" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3226" y="-75"/>
+            <point key="canvasLocation" x="4164" y="-75.112443778110944"/>
         </scene>
         <!--Submit Location View Controller-->
         <scene sceneID="Tll-op-LhG">
@@ -331,7 +336,7 @@
                                 </constraints>
                                 <state key="normal" title="Cancel"/>
                                 <connections>
-                                    <action selector="cancelPressed:" destination="CDs-uy-b9w" eventType="touchUpInside" id="u6y-2r-QiI"/>
+                                    <action selector="cancelBtnPressed:" destination="CDs-uy-b9w" eventType="touchUpInside" id="YeX-0N-9BD"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -354,13 +359,11 @@
                         <outlet property="mapView" destination="asL-xH-yxb" id="t8k-bY-csW"/>
                         <outlet property="mediaURLLink" destination="BWt-co-o1X" id="Vw3-c9-VZG"/>
                         <outlet property="submitButton" destination="hJj-Mv-wP1" id="m4l-Tf-qW7"/>
-                        <segue destination="tua-3p-9bj" kind="unwind" identifier="unwind" unwindAction="myUnwindActionWithSegue:" id="6fB-v3-gJ1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cq8-Py-fta" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="tua-3p-9bj" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4069.5999999999999" y="-75.112443778110944"/>
+            <point key="canvasLocation" x="5008.8000000000002" y="-75.112443778110944"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="tDK-sl-QpH">
@@ -377,7 +380,25 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pzu-WX-8HZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="708" y="35"/>
+            <point key="canvasLocation" x="1647.2" y="34.632683658170919"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="vmc-0v-AVr">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="RPP-Qt-E0K" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KdI-9r-e9K">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="aFC-Ad-goE"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dq1-IQ-mOr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-95.200000000000003" y="34.632683658170919"/>
         </scene>
     </scenes>
     <resources>
@@ -388,6 +409,6 @@
         <image name="placeholder" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="TH8-8e-Ybs"/>
+        <segue reference="Z1u-t1-YhL"/>
     </inferredMetricsTieBreakers>
 </document>

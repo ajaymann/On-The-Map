@@ -43,7 +43,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 
                 switch success {
                 case true :
-                    if let account = result?["account"] as? [String: AnyObject], let key = account["key"] {
+                    if let account = result?["account"] as? [String: AnyObject], let key = account["key"]{
                         userKey = key as! String
                     }
                     performUIUpdatesOnMain {
@@ -107,5 +107,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         indicator.stopAnimating()
         self.indicator.hidesWhenStopped = true
     }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+        
+    }
+
 }
 

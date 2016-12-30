@@ -94,11 +94,18 @@ class MapViewController: UIViewController {
         }
     }
     
-    @IBAction func myUnwindAction(segue: UIStoryboardSegue) {}
-
+    @IBAction func logoutPressed(_ sender: Any) {
+            UdacityClient.sharedInstance().taskForLogout(url: "https://www.udacity.com/api/session") { (success, data, error) in
+                if success == true {
+                    performUIUpdatesOnMain {
+                        self.navigationController?.popToRootViewController(animated: true)
+                    }
+                } else {
+                    
+                }
+        }
+    }
 }
-
-
 extension MapViewController: MKMapViewDelegate {
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             

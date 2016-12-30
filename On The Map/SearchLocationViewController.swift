@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchLocationViewController: UIViewController {
+class SearchLocationViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var searchButton: UIButton!
@@ -18,6 +18,38 @@ class SearchLocationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.searchButton.layer.cornerRadius = 5.0
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        subscribeToKeyboardNotifications()
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField){
+        unSubscribeToKeyboardNotifications()
+    }
+    
+    func subscribeToKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    func unSubscribeToKeyboardNotifications() {
+        
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    
+    func keyboardWillShow(notification: NSNotification) {
+        if view.frame.origin.y == 0{
+            self.view.frame.origin.y -= locationTextField.frame.height
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
     }
 
     @IBAction func searchButtonPressed(_ sender: Any) {

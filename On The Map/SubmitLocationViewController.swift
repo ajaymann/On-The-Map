@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class SubmitLocationViewController: UIViewController {
+class SubmitLocationViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var mediaURLLink: UITextField!
@@ -30,6 +30,7 @@ class SubmitLocationViewController: UIViewController {
             showLocationOnMap(locationText: locationText)
         }
     }
+    
     
     @IBAction func cancelPressed(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -54,13 +55,15 @@ class SubmitLocationViewController: UIViewController {
                 } else {
                     performUIUpdatesOnMain {
                         self.hideActivityIndicator()
-                        let alert = UIAlertController(title: "No Internet", message: "No Internet Connection", preferredStyle: UIAlertControllerStyle.alert)
+                        let alert = UIAlertController(title: "Could Not Post", message: "Please try again later", preferredStyle: UIAlertControllerStyle.alert)
                         alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: nil))
                         self.present(alert, animated: true, completion: nil)
                     }
                     
                 }
             })
+        } else {
+            hideActivityIndicator()
         }
     }
 }

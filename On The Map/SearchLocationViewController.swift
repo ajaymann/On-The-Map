@@ -18,6 +18,7 @@ class SearchLocationViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.searchButton.layer.cornerRadius = 5.0
+        NotificationCenter.default.addObserver(self, selector: #selector(popVC), name: NSNotification.Name(rawValue: "popVC"), object: nil)
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -70,6 +71,9 @@ class SearchLocationViewController: UIViewController, UITextFieldDelegate {
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
-        
+    }
+    
+    func popVC() {
+        self.navigationController?.popViewController(animated: true)
     }
 }

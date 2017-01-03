@@ -32,13 +32,16 @@ class SubmitLocationViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func cancelBtnPressed(_ sender: Any) {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "popVC"), object: nil)
         self.navigationController?.popViewController(animated: true)
     }
+    
     @IBAction func submitPressed(_ sender: Any) {
         showActivityIndicator()
         if Reachability.isConnectedToNetwork() {
             mediaURL = mediaURLLink.text!
             let httpBody = "{\"uniqueKey\": \"\(userKey)\", \"firstName\": \"\(userFirstName)\", \"lastName\": \"\(userLastName)\",\"mapString\": \"\(locationText!)\", \"mediaURL\": \"\(mediaURL)\",\"latitude\": \(latitude), \"longitude\": \(longitude)}"
+            
             ParseClient.sharedInstance().taskForPost(url: "https://parse.udacity.com/parse/classes/StudentLocation", jsonBody: httpBody, method: "POST", completionHandlerForPost: { (success, result, error) in
                 if success == true {
                     performUIUpdatesOnMain {

@@ -29,27 +29,37 @@ class MapViewController: UIViewController {
     }
     
     func getStudentLocations() {
-        
-        ParseClient.sharedInstance().taskForPost(url: "https://parse.udacity.com/parse/classes/StudentLocation", jsonBody: nil, method: "GET") { (success, result, error) in
-            if error != nil {
-                print(error)
-                return
-            }
-            
-            guard let newData = result?["results"] as? [[String: AnyObject]] else {
-                return
-            }
-            for dictionary in newData {
-                if let location : StudentLocation = StudentLocation(dict: dictionary){
-                    studentLocations.append(location)
+        if Reachability.isConnectedToNetwork() {
+            ParseClient.sharedInstance().taskForPost(url: "https://parse.udacity.com/parse/classes/StudentLocation?limit=100&order=-updatedAt", jsonBody: nil, method: "GET") { (success, result, error) in
+                
+                if success == true {
+                    
+                    guard let newData = result?["results"] as? [[String: AnyObject]] else {
+                        return
+                    }
+                    for dictionary in newData {
+                        if let location : StudentLocation = StudentLocation(dict: dictionary){
+                            studentLocations.append(location)
+                        }
+                    }
+                    performUIUpdatesOnMain {
+                        self.showStudentPins()
+                    }
+                } else {
+                    performUIUpdatesOnMain {
+                        let alert = UIAlertController(title: "Error", message: "Could Not load data. Try Again", preferredStyle: UIAlertControllerStyle.alert)
+                        alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
                 }
             }
+        } else {
             performUIUpdatesOnMain {
-                self.showStudentPins()
+                let alert = UIAlertController(title: "No Internet", message: "Please Try Again Later", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
         }
-        
-        
         
         // This is to remove previous location pins and to add new pins if they were added while the user was posting his own pin.
         if let annotations = studentLocationsMapView.annotations as? [MKPointAnnotation] {

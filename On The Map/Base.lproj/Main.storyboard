@@ -368,7 +368,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="tDK-sl-QpH">
             <objects>
-                <tabBarController id="DVg-VJ-OlF" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DVg-VJ-OlF" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" itemPositioning="fill" id="kyR-Xz-WzU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -385,6 +385,7 @@
         <!--Navigation Controller-->
         <scene sceneID="vmc-0v-AVr">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dq1-IQ-mOr" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="RPP-Qt-E0K" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="KdI-9r-e9K">
@@ -396,7 +397,6 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="aFC-Ad-goE"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Dq1-IQ-mOr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-95.200000000000003" y="34.632683658170919"/>
         </scene>

@@ -24,6 +24,21 @@ class ListViewController: UIViewController, UITableViewDelegate {
             self.tableView.reloadData()
         }
     }
+    @IBAction func logoutPressed(_ sender: Any) {
+        UdacityClient.sharedInstance().taskForLogout(url: "https://www.udacity.com/api/session") { (success, data, error) in
+            if success == true {
+                performUIUpdatesOnMain {
+                    self.dismiss(animated: true, completion: nil)
+                }
+            } else {
+                performUIUpdatesOnMain {
+                    let alert = UIAlertController(title: "Error", message: "Could Not Log Out. Try Again", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+        }
+    }
     
 }
 

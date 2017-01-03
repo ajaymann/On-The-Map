@@ -82,7 +82,7 @@
                         <outlet property="loginButton" destination="PIS-Nd-FdW" id="mei-yH-IKl"/>
                         <outlet property="passwordTextField" destination="7ut-4A-uGv" id="Zks-2p-6dQ"/>
                         <outlet property="usernameTextField" destination="VeB-St-epZ" id="Yth-l7-bG7"/>
-                        <segue destination="DVg-VJ-OlF" kind="show" identifier="performLoginSegue" id="dkz-9L-caC"/>
+                        <segue destination="DVg-VJ-OlF" kind="presentation" identifier="performLoginSegue" id="dkz-9L-caC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -108,7 +108,11 @@
                                 </constraints>
                                 <items>
                                     <navigationItem title="Locations" id="H5L-if-BPD">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="reply" id="UXz-VC-A08"/>
+                                        <barButtonItem key="leftBarButtonItem" systemItem="reply" id="UXz-VC-A08">
+                                            <connections>
+                                                <action selector="logoutPressed:" destination="6sH-99-jDy" id="Sp9-dt-ePw"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" image="placeholder" id="B7D-y0-g29">
                                             <connections>
                                                 <segue destination="xsi-A2-rpU" kind="show" id="TH8-8e-Ybs"/>
@@ -409,6 +413,6 @@
         <image name="placeholder" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Z1u-t1-YhL"/>
+        <segue reference="TH8-8e-Ybs"/>
     </inferredMetricsTieBreakers>
 </document>

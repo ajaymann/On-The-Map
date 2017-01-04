@@ -63,6 +63,9 @@ class SubmitLocationViewController: UIViewController, UITextFieldDelegate {
             })
         } else {
             hideActivityIndicator()
+            let alert = UIAlertController(title: "Could Not Post", message: "Please try again later", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
     }
 }

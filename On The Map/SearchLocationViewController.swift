@@ -60,7 +60,7 @@ class SearchLocationViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBAction func cancelBtnPressed(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
 
     }
     
@@ -74,6 +74,6 @@ class SearchLocationViewController: UIViewController, UITextFieldDelegate {
     }
     
     func popVC() {
-        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
 }

@@ -32,8 +32,7 @@ class SubmitLocationViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func cancelBtnPressed(_ sender: Any) {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "popVC"), object: nil)
-        self.navigationController?.popViewController(animated: true)
+        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func submitPressed(_ sender: Any) {
@@ -79,7 +78,7 @@ extension SubmitLocationViewController: MKMapViewDelegate {
                 self.hideActivityIndicator()
                 let alertController = UIAlertController(title: nil, message: "Place Not Found", preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: {action in
-                    self.navigationController?.popViewController(animated: true)
+                    self.dismiss(animated: true, completion: nil)
                 }))
                 self.present(alertController, animated: true, completion: nil)
                 return
